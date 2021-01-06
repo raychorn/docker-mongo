@@ -11,5 +11,24 @@ if [ "$MONGO_INITDB_USERNAME" ] && [ "$MONGO_INITDB_PASSWORD" ]; then
             pwd: $(_js_escape "$MONGO_INITDB_PASSWORD"),
             roles: [ { role: 'readWrite', db: $(_js_escape "$MONGO_INITDB_DATABASE") } ]
         })
+        use admin
+        db.createUser(
+            {
+                user: $(_js_escape "$MONGO_INITDB_ROOT_USERNAME"),
+                pwd: $(_js_escape "$MONGO_INITDB_ROOT_PASSWORD"),
+                roles: [{ role: 'root', db: "admin" }, "readWriteAnyDatabase"], 
+                mechanisms: [$(_js_escape "$MONGO_AUTH_MECHANISM")]
+            }
+        )
+
+        use $(_js_escape "$MONGO_INITDB_DATABASE")
+        db.createUser(
+            {
+                user: $(_js_escape "$MONGO_INITDB_USERNAME"),
+                pwd: $(_js_escape "$MONGO_INITDB_PASSWORD"),
+                roles: [{ role: "dbOwner", db: $(_js_escape "$MONGO_INITDB_DATABASE") }],
+                mechanisms: [$(_js_escape "$MONGO_AUTH_MECHANISM")]
+            }
+        )
     EOJS
 fi

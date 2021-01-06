@@ -5,7 +5,7 @@ services:
         container_name: mongodb
         hostname: mongodb
         volumes:
-            - ./mongodb/mongod.conf:/etc/mongod.conf
+            - ./mongod.conf:/etc/mongod.conf
             - ./mongodb/data/db/:/data/db/
             - ./mongodb/data/log/:/var/log/mongodb/
             - ./scripts/create-app-user.sh:/docker-entrypoint.sh
