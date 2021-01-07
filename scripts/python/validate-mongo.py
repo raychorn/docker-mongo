@@ -2,6 +2,8 @@ import os
 import sys
 import traceback
 
+import urllib
+
 def get_environ(key=None):
     if (isinstance(key, str)):
         for k,v in os.environ.items():
@@ -24,9 +26,10 @@ if (__name__ == '__main__'):
         listing = db.command('usersInfo')
         for document in listing['users']:
             print('{}'.format(document))
-            print('='*30)
+            print('-'*30)
             print()
-        
+        print()
+            
     except Exception as ex:
         exc_info = sys.exc_info()
         print('\n'.join(traceback.format_exception(*exc_info)))
