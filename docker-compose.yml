@@ -5,21 +5,20 @@ services:
         container_name: mongodb
         hostname: mongodb
         volumes:
-            - ./mongod.conf:/etc/mongod.conf
+            - ./etc/mongod.conf:/etc/mongod.conf
             - ./mongodb/data/db/:/data/db/
             - ./mongodb/data/log/:/var/log/mongodb/
-            - ./scripts/create-app-user.sh:/docker-entrypoint.sh
         env_file:
             - .env
         environment:
             MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
             MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
             MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+            WAIT_HOSTS: mongodb:27017
         ports:
             - "27017:27017"
-        restart: unless-stopped
+        #restart: unless-stopped
         logging:
             options:
                 max-size: 1g        
-        entrypoint: /docker-entrypoint.sh
         command: ["-f", "/etc/mongod.conf"]

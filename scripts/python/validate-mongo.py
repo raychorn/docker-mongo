@@ -15,12 +15,18 @@ if (__name__ == '__main__'):
     # Creating instance of mongoclient  
     try:
         db_name = os.environ.get('MONGO_INITDB_DATABASE')
-        client = MongoClient(os.environ.get('MONGO_URI'), username=os.environ.get('MONGO_INITDB_USERNAME'), password=os.environ.get('MONGO_INITDB_PASSWORD'), authSource=db_name, authMechanism=os.environ.get('MONGO_AUTH_MECHANISM'))
-        print(client)
-        # Creating database  
-        db = client[db_name]
-        collections_names = db.list_collection_names()
-        print('(1) collections_names = {}'.format(collections_names))
+        client = MongoClient(os.environ.get('MONGO_URI'), username=os.environ.get('MONGO_INITDB_ROOT_USERNAME'), password=os.environ.get('MONGO_INITDB_ROOT_PASSWORD'), authSource=db_name, authMechanism=os.environ.get('MONGO_AUTH_MECHANISM'))
+        print('client -> {}'.format(client))
+        db_name = os.environ.get('MONGO_INITDB_DATABASE')
+        db = client['{}'.format(db_name)]
+        print('db -> {}'.format(db))
+        
+        listing = db.command('usersInfo')
+        for document in listing['users']:
+            print('{}'.format(document))
+            print('='*30)
+            print()
+        
     except Exception as ex:
         exc_info = sys.exc_info()
         print('\n'.join(traceback.format_exception(*exc_info)))

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-chmod -R 0777 ./mongodb
-docker-compose up -d --remove-orphans
+docker-compose down
 CID=$(docker ps -qf "name=mongodb")
 echo "CID=$CID"

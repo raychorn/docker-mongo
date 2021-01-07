@@ -4,8 +4,8 @@ set -Eeuo pipefail
  
 # Based on mongo/docker-entrypoint.sh
 # https://github.com/docker-library/mongo/blob/master/docker-entrypoint.sh#L303
-if [ "$MONGO_INITDB_USERNAME" ] && [ "$MONGO_INITDB_PASSWORD" ]; then
-    "${mongo[@]}" -u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$rootAuthDatabase" "$MONGO_INITDB_DATABASE" <<-EOJS
+if [ "$MONGO_INITDB_USERNAME" ] && [ "$MONGO_INITDB_PASSWORD" ]; then   # -u "$MONGO_INITDB_ROOT_USERNAME" -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase "$MONGO_INITDB_DATABASE"
+    mongo --shell <<'EOJS'
         db.createUser({
             user: $(_js_escape "$MONGO_INITDB_USERNAME"),
             pwd: $(_js_escape "$MONGO_INITDB_PASSWORD"),
@@ -30,5 +30,5 @@ if [ "$MONGO_INITDB_USERNAME" ] && [ "$MONGO_INITDB_PASSWORD" ]; then
                 mechanisms: [$(_js_escape "$MONGO_AUTH_MECHANISM")]
             }
         )
-    EOJS
+EOJS
 fi
