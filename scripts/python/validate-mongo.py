@@ -11,23 +11,6 @@ def get_environ(key=None):
                 print('{} -> {}'.format(k,v))
 
 if (__name__ == '__main__'):
-    '''
-    if (k == 'SECRETS1'):
-        d = {}
-        encrypted = crypto_utils.encrypt('root') # , callback=handle_encryption
-        d['MONGO_INITDB_ROOT_USERNAME'] = encrypted
-        encrypted = crypto_utils.encrypt('sisko@7660$boo')
-        d['MONGO_INITDB_ROOT_PASSWORD'] = encrypted
-        encrypted = crypto_utils.encrypt('admin')
-        d['MONGO_INITDB_DATABASE'] = encrypted
-        encrypted = crypto_utils.encrypt('rs0')
-        d['MONGO_REPLICA_SET_NAME'] = encrypted
-        encrypted = crypto_utils.encrypt('SCRAM-SHA-256')
-        d['MONGO_AUTH_MECHANISM'] = encrypted
-        for k,v in d.items():
-            print('{}={}'.format(k, v))
-
-    '''
     get_environ(key='mongo')
     from pymongo import MongoClient # import mongo client to connect  
     import pprint  
