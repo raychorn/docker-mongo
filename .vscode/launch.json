@@ -1,0 +1,19 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "env": {
+                "PATH": "C:\\Python38\\;C:\\Python38\\DLLs\\;C:\\Python38\\Scripts\\;C:\\Python38\\Tools\\;C:\\Python38\\Tools\\ninja\\;C:\\Python39\\Scripts\\;C:\\Python39\\;C:\\Python38\\Scripts\\;C:\\Python38\\;C:\\Python36\\;C:\\Python36\\DLLs\\;C:\\Python36\\Scripts\\;C:\\Python36\\Tools\\;C:\\Python36\\Tools\\ninja\\;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Python2715\\;C:\\Python2715\\Scripts;C:\\Users\\Owner\\AppData\\Roaming\\Python\\Scripts;C:\\Program Files (x86)\\Razer Chroma SDK\\bin;C:\\Program Files\\Razer Chroma SDK\\bin;C:\\Program Files (x86)\\Razer\\ChromaBroadcast\\bin;C:\\Program Files\\Razer\\ChromaBroadcast\\bin;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files\\PuTTY\\;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files\\TortoiseSVN\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\nodejs\\;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\msys\\opt\\windows_64\\bin;%USERPROFILE%\\.cargo\\bin;C:\\Program Files\\dotnet;C:\\tools\\lxrunoffline;C:\\Go\\bin;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\Program Files\\Git\\cmd",
+                "PYTHONPATH": "C:\\Users\\Owner\\OneDrive\\##projects\\docker-projects\\docker-mongo\\.venv\\Lib\\site-packages"
+            },
+            "console":"integratedTerminal"
+        }
+    ]
+}
