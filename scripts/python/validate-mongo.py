@@ -146,6 +146,61 @@ if (__name__ == '__main__'):
     get_environ(key='mongo')
     # Creating instance of mongoclient  
     try:
+        if (0):
+            db_name = os.environ.get('MONGO_INITDB_DATABASE')
+            password = os.environ.get('MONGO_INITDB_ROOT_PASSWORD')
+            if (len(password) == 0):
+                password = input("password? ")
+            client = MongoClient(os.environ.get('MONGO_URI'), username=os.environ.get('MONGO_INITDB_ROOT_USERNAME'), password=password, authSource=db_name, authMechanism=os.environ.get('MONGO_AUTH_MECHANISM'))
+            print('client -> {}'.format(client))
+            db_name = os.environ.get('MONGO_INITDB_DATABASE')
+            db = client['{}'.format(db_name)]
+            print('db -> {}'.format(db))
+
+
+            vyper_admin_name = 'VYPERADMIN'
+            db2 = client[vyper_admin_name]
+            print('db2 -> {}'.format(db2))
+            
+            col2 = db2['ADMIN']
+            print('col2 -> {}'.format(col2))
+            
+            doc = col2.find_one({'admin':ADMIN_ID})
+            if (doc):
+                print('*** (1) doc len -> {}'.format(len(doc)))
+            else:
+                print('Removing all from {} !.format(col2.name)')
+                remove_all_admins_not_matching_this(ADMIN_ID, collection=col2, user_type='admin')
+                print('Adding ADMIN_ID !')
+                col2.insert_one({'admin': ADMIN_ID})
+            doc = col2.find_one({'admin':ADMIN_ID})
+            if (doc):
+                print('*** (2) doc len -> {}'.format(len(doc)))
+                print('*** doc -> {}'.format(doc))
+
+            if (0):
+                docs = col2.find()
+                for doc in docs:
+                    uuid = doc.get('admin')
+                    if (str(uuid) == ADMIN_ID):
+                        print('*** Found -> {}'.format(doc))
+                    else:
+                        d = {'_id':doc.get('_id')}
+                        print('(-) Removed: {}'.format(d))
+                        col2.remove(d)
+                docs = col2.find()
+                for doc in docs:
+                    uuid = doc.get('admin')
+                    if (str(uuid) == ADMIN_ID):
+                        print('*** Found -> {}'.format(doc))
+                        d = {'_id':doc.get('_id')}
+                        print('*** Removed: {}'.format(d))
+                        col2.remove(d)
+            if (0):
+                new_uuid = uuid.uuid4()
+                col2.insert_one({'admin': new_uuid})
+
+
         db_name = os.environ.get('MONGO_INITDB_DATABASE')
         password = os.environ.get('MONGO_INITDB_ROOT_PASSWORD')
         if (len(password) == 0):
@@ -156,50 +211,6 @@ if (__name__ == '__main__'):
         db = client['{}'.format(db_name)]
         print('db -> {}'.format(db))
 
-
-        vyper_admin_name = 'VYPERADMIN'
-        db2 = client[vyper_admin_name]
-        print('db2 -> {}'.format(db2))
-        
-        col2 = db2['ADMIN']
-        print('col2 -> {}'.format(col2))
-        
-        doc = col2.find_one({'admin':ADMIN_ID})
-        if (doc):
-            print('*** (1) doc len -> {}'.format(len(doc)))
-        else:
-            print('Removing all from {} !.format(col2.name)')
-            remove_all_admins_not_matching_this(ADMIN_ID, collection=col2, user_type='admin')
-            print('Adding ADMIN_ID !')
-            col2.insert_one({'admin': ADMIN_ID})
-        doc = col2.find_one({'admin':ADMIN_ID})
-        if (doc):
-            print('*** (2) doc len -> {}'.format(len(doc)))
-            print('*** doc -> {}'.format(doc))
-
-        if (0):
-            docs = col2.find()
-            for doc in docs:
-                uuid = doc.get('admin')
-                if (str(uuid) == ADMIN_ID):
-                    print('*** Found -> {}'.format(doc))
-                else:
-                    d = {'_id':doc.get('_id')}
-                    print('(-) Removed: {}'.format(d))
-                    col2.remove(d)
-            docs = col2.find()
-            for doc in docs:
-                uuid = doc.get('admin')
-                if (str(uuid) == ADMIN_ID):
-                    print('*** Found -> {}'.format(doc))
-                    d = {'_id':doc.get('_id')}
-                    print('*** Removed: {}'.format(d))
-                    col2.remove(d)
-        if (0):
-            new_uuid = uuid.uuid4()
-            col2.insert_one({'admin': new_uuid})
-
-        
         print('BEGIN: users')
         listing = db.command('usersInfo')
         for document in listing['users']:
@@ -229,7 +240,6 @@ if (__name__ == '__main__'):
         print('END: databases')
         print('='*30)
         print()
-
 
     except Exception as ex:
         exc_info = sys.exc_info()
