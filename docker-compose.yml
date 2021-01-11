@@ -22,7 +22,8 @@ services:
                 max-size: 1g        
         command: ["-f", "/etc/mongod.conf"]
         networks:
-            - backend
+            vpcbr:
+                ipv4_address: 10.5.0.5
         deploy:
             resources:
                 limits:
@@ -30,9 +31,11 @@ services:
                     memory: 500M
 
     webserver:
-        image: raychorn/ubuntu_python38:latest
+        build: .
         container_name: dev1
         restart: unless-stopped
+        volumes:
+            - C:\Users\Owner\OneDrive\##projects\docker-projects\docker-mongo-dev1:/workspaces/docker-mongo-dev1
         ports:
             - "9000:9000"
         depends_on:
@@ -44,10 +47,13 @@ services:
         tty: true
         stdin_open: true
         networks:
-            - frontend
+            vpcbr:
+                ipv4_address: 10.5.0.6
 
 networks:
-    frontend:
-        driver: bridge
-    backend:
-        driver: bridge
+  vpcbr:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
+         gateway: 10.5.0.1
