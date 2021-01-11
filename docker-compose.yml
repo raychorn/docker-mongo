@@ -23,7 +23,12 @@ services:
         command: ["-f", "/etc/mongod.conf"]
         networks:
             - backend
-            
+        deploy:
+            resources:
+                limits:
+                    cpus: '1.5'
+                    memory: 500M
+
 webserver:
     image: raychorn/ubuntu_python38:latest
     container_name: dev1
@@ -32,6 +37,8 @@ webserver:
         - "8088:8088"
     depends_on:
         - mongodb
+    env_file:
+        - .env
     networks:
         - frontend
 
