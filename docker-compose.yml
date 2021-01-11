@@ -17,8 +17,26 @@ services:
             WAIT_HOSTS: mongodb:27017
         ports:
             - "27017:27017"
-        #restart: unless-stopped
         logging:
             options:
                 max-size: 1g        
         command: ["-f", "/etc/mongod.conf"]
+        networks:
+            - backend
+            
+webserver:
+    image: raychorn/ubuntu_python38:latest
+    container_name: dev1
+    restart: unless-stopped
+    ports:
+        - "8088:8088"
+    depends_on:
+        - mongodb
+    networks:
+        - frontend
+
+networks:
+    frontend:
+        driver: bridge
+    backend:
+        driver: bridge

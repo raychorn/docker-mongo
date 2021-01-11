@@ -1,8 +1,12 @@
-# mongodb via docker-compose
+# mongodb via docker-compose in windows
 
 ## Table of Contents
 
 - [Usage](#usage)
+
+## about
+
+This is an incomplete effort to migrate a process that began in Linux but ran into performance issues because docker in wsl2 is just a waste of performance and time.
 
 ## Usage <a name = "usage"></a>
 
