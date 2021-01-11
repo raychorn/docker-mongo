@@ -7,6 +7,8 @@ import uuid
 from pymongo import MongoClient # import mongo client to connect  
 import pprint  
 
+is_not_none = lambda s:(s) and (isinstance(s, str)) and (len(s) > 0)
+
 def get_environ(key=None):
     if (isinstance(key, str)):
         for k,v in os.environ.items():
@@ -68,15 +70,28 @@ def remove_all_admins_not_matching_this(u, user_type=None, collection=None):
     return __doc__
 
 
+def get_mongo_client(mongouri=os.environ.get('MONGO_URI'), db_name=os.environ.get('MONGO_INITDB_DATABASE'), username=os.environ.get('MONGO_INITDB_ROOT_USERNAME'), password=os.environ.get('MONGO_INITDB_ROOT_PASSWORD'), authMechanism=os.environ.get('MONGO_AUTH_MECHANISM')):
+    assert is_not_none(username), 'Cannot continue without a username ({}).'.format(username)
+    assert is_not_none(password), 'Cannot continue without a password ({}).'.format(password)
+    assert is_not_none(mongouri), 'Cannot continue without a mongouri ({}).'.format(mongouri)
+    assert is_not_none(db_name), 'Cannot continue without a db_name ({}).'.format(db_name)
+    assert is_not_none(authMechanism), 'Cannot continue without a authMechanism ({}).'.format(authMechanism)
+    return  MongoClient(mongouri, username=username, password=password, authSource=db_name, authMechanism=authMechanism)
+
+
 def auto_config_admin(mongouri=os.environ.get('MONGO_URI'), db_name=os.environ.get('MONGO_INITDB_DATABASE'), app_dbName=None, app_colName=None, user_type='admin', admin_id=None, username=os.environ.get('MONGO_INITDB_ROOT_USERNAME'), password=os.environ.get('MONGO_INITDB_ROOT_PASSWORD'), authMechanism=os.environ.get('MONGO_AUTH_MECHANISM'), verbose=False, debug=False, report_except=True):
     doc = None
     try:
-        is_not_none = lambda s:(s) and (isinstance(s, str)) and (len(s) > 0)
-        assert is_not_none(password), 'Cannot continue without a password ({}).'.format(password)
         if (not is_not_none(admin_id)):
             admin_id = str(uuid.uuid4()) # assign a uuid if none was given.
         assert is_not_none(admin_id), 'Cannot continue without an admin_id ({}).'.format(admin_id)
-        client = MongoClient(mongouri, username=username, password=password, authSource=db_name, authMechanism=authMechanism)
+        if (verbose):
+            print('mongouri -> ({})'.format(mongouri))
+            print('db_name -> ({})'.format(db_name))
+            print('username -> ({})'.format(username))
+            print('password -> ({})'.format(password))
+            print('authMechanism -> ({})'.format(authMechanism))
+        client = get_mongo_client(mongouri=mongouri, db_name=db_name, username=username, password=password, authMechanism=authMechanism)
         if (verbose):
             print('client -> ',)
             pprint.pprint(client)

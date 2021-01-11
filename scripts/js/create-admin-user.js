@@ -2,31 +2,10 @@
 use admin
 db.createUser(
     {
-        user: "admin",
+        user: "root",
         pwd: passwordPrompt(),
-        roles: [{ role: 'root', db: "admin" }, "readWriteAnyDatabase"], 
+        roles: [{ role: 'root', db: "admin" }, "readWriteAnyDatabase", "dbAdminAnyDatabase"], 
         mechanisms: ["SCRAM-SHA-256"]
-    }
-)
-
-use angularappgenerator
-db.angularappgenerator.insert({ name: "sample name", value: 205 })
-db.createUser(
-    {
-        user: "appuser",
-        pwd: passwordPrompt(),
-        roles: [{ role: "dbOwner", db: "angularappgenerator" }],
-        mechanisms: ["SCRAM-SHA-256"]
-    }
-)
-
-use angularappgenerator
-db.updateUser("appuser",
-    {
-        pwd: passwordPrompt(),
-        roles: [
-            { role: "dbOwner", db: "angularappgenerator" }
-        ]
     }
 )
 */
