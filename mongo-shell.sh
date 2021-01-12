@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mongosh "mongodb://127.0.0.1:27017" --username admin --authenticationDatabase admin
+mongosh "mongodb://172.20.178.202:27017" --username admin --authenticationDatabase admin
