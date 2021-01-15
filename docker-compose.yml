@@ -14,7 +14,6 @@ services:
             MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
             MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
             MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
-            WAIT_HOSTS: mongodb:27017
         ports:
             - "27017:27017"
         logging:
@@ -24,15 +23,16 @@ services:
         networks:
             vpcbr:
                 ipv4_address: 10.5.0.5
+        restart: unless-stopped
         deploy:
             resources:
                 limits:
-                    cpus: '1.5'
-                    memory: 500M
+                    cpus: '0.1'
+                    memory: 200M
 
     webserver:
         build: .
-        container_name: dev1
+        container_name: vyperapi
         restart: unless-stopped
         volumes:
             - C:\Users\Owner\OneDrive\##projects\docker-projects\docker-mongo-dev1:/workspaces/docker-mongo-dev1
@@ -42,10 +42,17 @@ services:
             - mongodb
         env_file:
             - .env
+        environment:
+            WAIT_HOSTS: mongodb:27017
         entrypoint:
             - bash
         tty: true
         stdin_open: true
+        deploy:
+            resources:
+                limits:
+                    cpus: '0.9'
+                    memory: 1000M
         networks:
             vpcbr:
                 ipv4_address: 10.5.0.6
