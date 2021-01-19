@@ -33,6 +33,12 @@ Dockerfile:
   docker-compose up -d
   setup the crontab job to restart.
   perform smoke test to ensure the web-head is running.
-  
+
+#### nginx
+
+cd /etc/nginx/sites-enabled
+unlink default
+
+
 
 (c). Copyright, Ray C Horn, All Rights Reserved.
